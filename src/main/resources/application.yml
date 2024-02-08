@@ -1,2 +1,13 @@
 wot:
   applicationId: 58032d84b76b3983061b6769bc549071
+
+quarkus:
+  datasource:
+    db-kind: postgresql
+    username: postgres
+    password: mysecretpassword
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/postgres
+  hibernate-orm:
+    database:
+      generation: drop-and-create
