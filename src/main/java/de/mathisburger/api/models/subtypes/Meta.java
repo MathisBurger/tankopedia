@@ -1,4 +1,4 @@
-package de.mathisburger.api.models;
+package de.mathisburger.api.models.subtypes;
 
 public class Meta {
 

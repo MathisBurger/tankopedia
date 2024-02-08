@@ -1,4 +1,6 @@
-package de.mathisburger.api.models;
+package de.mathisburger.api.models.results;
+
+import de.mathisburger.api.models.subtypes.SearchedPlayer;
 
 import java.util.List;
 
