@@ -1,4 +1,4 @@
-package de.mathisburger;
+package de.mathisburger.resources;
 
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.Description;

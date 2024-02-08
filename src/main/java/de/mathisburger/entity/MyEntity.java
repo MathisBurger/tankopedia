@@ -1,4 +1,4 @@
-package de.mathisburger;
+package de.mathisburger.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
