@@ -3,12 +3,10 @@ package de.mathisburger.factory;
 import de.mathisburger.api.WotApiClient;
 import de.mathisburger.api.models.datatypes.TankData;
 import de.mathisburger.api.models.results.TanksResult;
+import de.mathisburger.api.models.subtypes.CrewMemberData;
 import de.mathisburger.api.models.subtypes.TankModuleData;
 import de.mathisburger.config.WargamingConfig;
-import de.mathisburger.entity.LastTank;
-import de.mathisburger.entity.NextTank;
-import de.mathisburger.entity.Tank;
-import de.mathisburger.entity.TankModule;
+import de.mathisburger.entity.*;
 import de.mathisburger.repository.TankModuleRepository;
 import de.mathisburger.repository.TankRepository;
 import io.quarkus.scheduler.Scheduled;
@@ -64,7 +62,7 @@ public class EncyclopediaFactory {
         this.addTanks(tanks);
         this.addNextTanks(tanks);
         this.addLastTanks(tanks);
-        // TODO: Add crew to tanks
+        this.addCrewMembers(tanks);
         // TODO: Add default profile
         // TODO: Implement consumables with relation to tanks
         // TODO: Implement accievements
@@ -75,6 +73,8 @@ public class EncyclopediaFactory {
         // TODO: Implement badges
         // TODO: Implement crew qualifications
         // TODO: Implement crew skills
+
+        // TODO: Remove all static entities as operations
 
         // Establish relations
         this.addTankModuleRelations(modules);
@@ -191,6 +191,21 @@ public class EncyclopediaFactory {
                 }
                 this.entityManager.persist(tank);
             }
+        }
+    }
+
+    @Transactional
+    public void addCrewMembers(List<TankData> tanks) {
+        for (TankData tankData : tanks) {
+            Tank tank = this.tankRepository.findById(tankData.tank_id);
+            for (CrewMemberData memberData : tankData.crew) {
+                CrewMember member = new CrewMember();
+                member.memberId = memberData.member_id;
+                member.roles = memberData.roles.keySet();
+                this.entityManager.persist(member);
+                tank.crewMembers.add(member);
+            }
+            this.entityManager.persist(tank);
         }
     }
 
