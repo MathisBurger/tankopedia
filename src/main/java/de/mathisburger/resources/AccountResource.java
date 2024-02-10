@@ -3,6 +3,7 @@ package de.mathisburger.resources;
 import de.mathisburger.api.WotApiClient;
 import de.mathisburger.api.models.results.PersonalInfoResult;
 import de.mathisburger.api.models.results.PlayerSearchResult;
+import de.mathisburger.api.models.results.PlayerTanksResult;
 import de.mathisburger.config.WargamingConfig;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.graphql.GraphQLApi;
@@ -27,6 +28,11 @@ public class AccountResource {
     @Query
     public PersonalInfoResult personalInfo(String accountId) {
         return apiClient.personalInfo(config.applicationID(), accountId);
+    }
+
+    @Query
+    public PlayerTanksResult playerTanks(String accountId) {
+        return apiClient.playersTanks(config.applicationID(), accountId);
     }
 
 }
