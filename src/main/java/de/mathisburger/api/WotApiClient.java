@@ -1,8 +1,5 @@
 package de.mathisburger.api;
-import de.mathisburger.api.models.results.PersonalInfoResult;
-import de.mathisburger.api.models.results.PlayerAchievementsResult;
-import de.mathisburger.api.models.results.PlayerSearchResult;
-import de.mathisburger.api.models.results.PlayerTanksResult;
+import de.mathisburger.api.models.results.*;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
@@ -25,5 +22,9 @@ public interface WotApiClient {
     @GET
     @Path("/account/achievements/")
     PlayerAchievementsResult playerAchievements(@QueryParam("application_id") String applicationId, @QueryParam("account_id") String accountId);
+
+    @GET
+    @Path("/encyclopedia/vehicles/")
+    TanksResult tanks(@QueryParam("application_id") String applicationId, @QueryParam("page_no") int pageNo);
 
 }
