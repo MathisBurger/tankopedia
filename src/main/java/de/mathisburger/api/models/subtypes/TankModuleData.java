@@ -3,7 +3,7 @@ package de.mathisburger.api.models.subtypes;
 import java.util.List;
 import java.util.Optional;
 
-public class TankModule {
+public class TankModuleData {
 
     public String name;
 

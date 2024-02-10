@@ -1,5 +1,9 @@
 wargaming:
   applicationId: 58032d84b76b3983061b6769bc549071
+  schedule: "0 * * * * ? *"
+
+hibernate:
+  dialect:
 
 quarkus:
   datasource:
@@ -9,6 +13,7 @@ quarkus:
     jdbc:
       url: jdbc:postgresql://localhost:5432/postgres
   hibernate-orm:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
     database:
       generation: drop-and-create
   rest-client:

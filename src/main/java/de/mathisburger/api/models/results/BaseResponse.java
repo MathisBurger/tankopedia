@@ -2,10 +2,12 @@ package de.mathisburger.api.models.results;
 
 import de.mathisburger.api.models.subtypes.Meta;
 
+import java.util.Optional;
+
 public abstract class BaseResponse {
     public String status;
 
-    public Meta meta;
+    public Optional<Meta> meta;
 
     public BaseResponse() {
 
@@ -15,7 +17,7 @@ public abstract class BaseResponse {
         return this.status;
     }
 
-    public Meta getMeta() {
+    public Optional<Meta> getMeta() {
         return this.meta;
     }
 }

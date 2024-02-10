@@ -3,7 +3,7 @@ package de.mathisburger.api.models.datatypes;
 import de.mathisburger.api.models.subtypes.CrewMemberData;
 import de.mathisburger.api.models.subtypes.DefaultProfile;
 import de.mathisburger.api.models.subtypes.TankImagesData;
-import de.mathisburger.api.models.subtypes.TankModule;
+import de.mathisburger.api.models.subtypes.TankModuleData;
 
 import java.util.List;
 import java.util.Map;
@@ -25,6 +25,9 @@ public class TankData {
 
     public int[] suspensions;
 
+    /**
+     * TODO: How to handle this
+     */
     public int[] provisions;
 
     public int[] engines;
@@ -43,7 +46,7 @@ public class TankData {
 
     public Map<String, Integer> next_tanks;
 
-    public Map<String, TankModule> modules_tree;
+    public Map<String, TankModuleData> modules_tree;
 
     public String nation;
 

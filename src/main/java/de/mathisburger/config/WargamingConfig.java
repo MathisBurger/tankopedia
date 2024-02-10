@@ -8,4 +8,7 @@ public interface WargamingConfig {
 
     @WithName("applicationId")
     String applicationID();
+
+    @WithName("schedule")
+    String schedule();
 }
