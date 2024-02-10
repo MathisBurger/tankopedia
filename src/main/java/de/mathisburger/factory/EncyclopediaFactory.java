@@ -66,6 +66,15 @@ public class EncyclopediaFactory {
         this.addLastTanks(tanks);
         // TODO: Add crew to tanks
         // TODO: Add default profile
+        // TODO: Implement consumables with relation to tanks
+        // TODO: Implement accievements
+        // TODO: Implement maps
+        // TODO: Implement personal missions
+        // TODO: Implement personal reserves
+        // TODO: Implement modules
+        // TODO: Implement badges
+        // TODO: Implement crew qualifications
+        // TODO: Implement crew skills
 
         // Establish relations
         this.addTankModuleRelations(modules);
