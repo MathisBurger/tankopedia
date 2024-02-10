@@ -1,4 +1,4 @@
-package de.mathisburger.api.models.subtypes;
+package de.mathisburger.api.models.datatypes;
 
 public class SearchedPlayer {
 

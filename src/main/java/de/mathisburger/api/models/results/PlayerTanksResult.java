@@ -1,6 +1,6 @@
 package de.mathisburger.api.models.results;
 
-import de.mathisburger.api.models.subtypes.PlayersTank;
+import de.mathisburger.api.models.datatypes.PlayersTank;
 
 import java.util.List;
 import java.util.Map;

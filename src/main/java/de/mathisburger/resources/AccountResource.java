@@ -2,6 +2,7 @@ package de.mathisburger.resources;
 
 import de.mathisburger.api.WotApiClient;
 import de.mathisburger.api.models.results.PersonalInfoResult;
+import de.mathisburger.api.models.results.PlayerAchievementsResult;
 import de.mathisburger.api.models.results.PlayerSearchResult;
 import de.mathisburger.api.models.results.PlayerTanksResult;
 import de.mathisburger.config.WargamingConfig;
@@ -33,6 +34,11 @@ public class AccountResource {
     @Query
     public PlayerTanksResult playerTanks(String accountId) {
         return apiClient.playersTanks(config.applicationID(), accountId);
+    }
+
+    @Query
+    public PlayerAchievementsResult playerAchievements(String accountId) {
+        return apiClient.playerAchievements(config.applicationID(), accountId);
     }
 
 }

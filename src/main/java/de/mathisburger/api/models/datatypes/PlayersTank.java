@@ -1,4 +1,6 @@
-package de.mathisburger.api.models.subtypes;
+package de.mathisburger.api.models.datatypes;
+
+import de.mathisburger.api.models.subtypes.PlayersTankStatistics;
 
 public class PlayersTank {
 
