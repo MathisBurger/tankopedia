@@ -5,6 +5,8 @@ import de.mathisburger.api.models.datatypes.TankData;
 import de.mathisburger.api.models.results.TanksResult;
 import de.mathisburger.api.models.subtypes.TankModuleData;
 import de.mathisburger.config.WargamingConfig;
+import de.mathisburger.entity.LastTank;
+import de.mathisburger.entity.NextTank;
 import de.mathisburger.entity.Tank;
 import de.mathisburger.entity.TankModule;
 import de.mathisburger.repository.TankModuleRepository;
@@ -60,15 +62,15 @@ public class EncyclopediaFactory {
         // Add new entries
         this.addTankModules(modules);
         this.addTanks(tanks);
-        // TODO: Add next tanks to tanks
+        this.addNextTanks(tanks);
+        this.addLastTanks(tanks);
         // TODO: Add crew to tanks
-        // TODO: what is prices_xp
         // TODO: Add default profile
 
         // Establish relations
         this.addTankModuleRelations(modules);
         this.addTankModuleSpecialRelations(tanks);
-
+        System.out.println("Import done!");
     }
 
     @Transactional
@@ -142,6 +144,44 @@ public class EncyclopediaFactory {
             tank.guns = new ArrayList<>();
             tank.turrets = new ArrayList<>();
             this.entityManager.persist(tank);
+        }
+    }
+
+    @Transactional
+    public void addNextTanks(List<TankData> tanks) {
+        for (TankData tankData : tanks) {
+            Tank tank = this.tankRepository.findById(tankData.tank_id);
+            if (tankData.next_tanks != null) {
+                for (String strNextId : tankData.next_tanks.keySet()) {
+                    int nextId = Integer.parseInt(strNextId);
+                    Tank nextTank = this.tankRepository.findById(nextId);
+                    NextTank obj = new NextTank();
+                    obj.nextTank = nextTank;
+                    obj.priceXp = tankData.next_tanks.get(strNextId);
+                    this.entityManager.persist(obj);
+                    tank.nextTanks.add(obj);
+                }
+                this.entityManager.persist(tank);
+            }
+        }
+    }
+
+    @Transactional
+    public void addLastTanks(List<TankData> tanks) {
+        for (TankData tankData : tanks) {
+            Tank tank = this.tankRepository.findById(tankData.tank_id);
+            if (tankData.prices_xp != null) {
+                for (String strLastId : tankData.prices_xp.keySet()) {
+                    int lastId = Integer.parseInt(strLastId);
+                    Tank lastTank = this.tankRepository.findById(lastId);
+                    LastTank obj = new LastTank();
+                    obj.lastTank = lastTank;
+                    obj.costXp = tankData.prices_xp.get(strLastId);
+                    this.entityManager.persist(obj);
+                    tank.lastTanks.add(obj);
+                }
+                this.entityManager.persist(tank);
+            }
         }
     }
 

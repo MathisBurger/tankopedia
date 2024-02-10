@@ -14,6 +14,45 @@ public class Tank {
     @ManyToMany
     public List<TankModule> previousModules;
 
+    public boolean isWheeled;
+
+    public boolean isPremium;
+
+    public String tag;
+
+    public String smallIcon;
+
+    public String contourIcon;
+
+    public String bigIcon;
+
+    public String type;
+
+    @Column(columnDefinition = "TEXT")
+    public String description;
+
+    public String shortName;
+
+    public boolean isPremiumIgr;
+
+    public String nation;
+
+    public int tier;
+
+    public boolean isGift;
+
+    public String name;
+
+    public Integer priceGold;
+
+    public Integer priceCredit;
+
+    @OneToMany
+    public List<NextTank> nextTanks;
+
+    @OneToMany
+    public List<LastTank> lastTanks;
+
     @ManyToMany
     @JoinTable(
             name = "tank_radio",
@@ -53,37 +92,4 @@ public class Tank {
             inverseJoinColumns = { @JoinColumn(name = "turret_id") }
     )
     public List<TankModule> turrets;
-
-    public boolean isWheeled;
-
-    public boolean isPremium;
-
-    public String tag;
-
-    public String smallIcon;
-
-    public String contourIcon;
-
-    public String bigIcon;
-
-    public String type;
-
-    @Column(columnDefinition = "TEXT")
-    public String description;
-
-    public String shortName;
-
-    public boolean isPremiumIgr;
-
-    public String nation;
-
-    public int tier;
-
-    public boolean isGift;
-
-    public String name;
-
-    public Integer priceGold;
-
-    public Integer priceCredit;
 }
