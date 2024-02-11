@@ -1,5 +1,6 @@
 package de.mathisburger.factory;
 
+import de.mathisburger.factory.encyclopedia.AchievementFactory;
 import de.mathisburger.factory.encyclopedia.MapFactory;
 import de.mathisburger.factory.encyclopedia.TankFactory;
 import io.quarkus.scheduler.Scheduled;
@@ -15,7 +16,8 @@ public class EncyclopediaFactory {
     @Inject
     MapFactory mapFactory;
 
-
+    @Inject
+    AchievementFactory achievementFactory;
 
     @Scheduled(cron = "{wargaming.schedule}")
     void reloadEncyclopedia() {
@@ -27,8 +29,11 @@ public class EncyclopediaFactory {
         this.mapFactory.reloadMaps();
         System.out.println("Imported maps");
 
+        this.achievementFactory.clearAchievementData();
+        this.achievementFactory.reloadAchievements();
+        System.out.println("Imported achievements");
+
         // TODO: Implement consumables with relation to tanks
-        // TODO: Implement accievements
         // TODO: Implement personal missions
         // TODO: Implement personal reserves
         // TODO: Implement modules

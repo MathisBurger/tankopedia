@@ -31,4 +31,7 @@ public interface WotApiClient {
     @Path("/encyclopedia/arenas/")
     MapResult maps(@QueryParam("application_id") String applicationId);
 
+    @GET
+    @Path("/encyclopedia/achievements/")
+    AchievementResult achievements(@QueryParam("application_id") String applicationId);
 }
