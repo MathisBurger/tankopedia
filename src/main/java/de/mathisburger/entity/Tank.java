@@ -11,7 +11,7 @@ public class Tank {
     @Id
     public int id;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     public List<TankModule> previousModules;
 
     public boolean isWheeled;
@@ -47,19 +47,19 @@ public class Tank {
 
     public Integer priceCredit;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     public List<NextTank> nextTanks;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     public List<LastTank> lastTanks;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     public List<CrewMember> crewMembers;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public DefaultProfile defaultProfile;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "tank_radio",
             joinColumns = { @JoinColumn(name = "tank_id") },
@@ -67,7 +67,7 @@ public class Tank {
     )
     public List<TankModule> radios;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "tank_suspension",
             joinColumns = { @JoinColumn(name = "tank_id") },
@@ -75,7 +75,7 @@ public class Tank {
     )
     public List<TankModule> suspensions;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "tank_engine",
             joinColumns = { @JoinColumn(name = "tank_id") },
@@ -83,7 +83,7 @@ public class Tank {
     )
     public List<TankModule> engines;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "tank_gun",
             joinColumns = { @JoinColumn(name = "tank_id") },
@@ -91,7 +91,7 @@ public class Tank {
     )
     public List<TankModule> guns;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "tank_turret",
             joinColumns = { @JoinColumn(name = "tank_id") },

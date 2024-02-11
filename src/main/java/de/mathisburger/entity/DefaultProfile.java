@@ -9,19 +9,19 @@ public class DefaultProfile {
     @GeneratedValue
     public int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public DefaultProfileModules modules;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public DefaultProfileGun gun;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public DefaultProfileTurret turret;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public DefaultProfileRadio radio;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public DefaultProfileAmmo ammo;
 
     public int maxAmmo;

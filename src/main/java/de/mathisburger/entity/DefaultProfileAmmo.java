@@ -1,9 +1,6 @@
 package de.mathisburger.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class DefaultProfileAmmo {
@@ -14,7 +11,7 @@ public class DefaultProfileAmmo {
 
     public int[] penetration;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public DefaultProfileStun stun;
 
     public String type;

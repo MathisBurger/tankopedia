@@ -11,6 +11,6 @@ public class LastTank {
 
     public int costXp;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     public Tank lastTank;
 }

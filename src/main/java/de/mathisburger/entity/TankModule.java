@@ -13,13 +13,13 @@ public class TankModule {
     @Id
     public Integer id;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     public List<TankModule> nextModules;
 
-    @ManyToMany(mappedBy = "nextModules")
+    @ManyToMany(mappedBy = "nextModules", cascade = CascadeType.ALL)
     public List<TankModule> previousModules;
 
-    @ManyToMany(mappedBy = "previousModules")
+    @ManyToMany(mappedBy = "previousModules", cascade = CascadeType.ALL)
     public List<Tank> nextTanks;
 
     public boolean isDefault;

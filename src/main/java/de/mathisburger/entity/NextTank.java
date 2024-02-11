@@ -9,7 +9,7 @@ public class NextTank {
     @GeneratedValue
     public int id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     public Tank nextTank;
 
     public int priceXp;
