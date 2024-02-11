@@ -40,29 +40,9 @@ public class EncyclopediaFactory {
 
     @Scheduled(cron = "{wargaming.schedule}")
     void reloadEncyclopedia() {
-        List<TankData> tanks = new ArrayList<>();
-        TanksResult result = null;
-        int pageNo = 1;
-        while ((result = apiClient.tanks(config.applicationID(), pageNo)) != null && result.data != null && result.data.isPresent()) {
-            tanks.addAll(result.data.get().values());
-            pageNo++;
-        }
-
-        List<TankModuleData> modules = new ArrayList<>();
-        for (TankData tank : tanks) {
-            modules.addAll(tank.modules_tree.values());
-        }
-
-        // Clear database entries
-        this.removeAllTankModules();
-        this.removeAllTanks();
-
-        // Add new entries
-        this.addTankModules(modules);
-        this.addTanks(tanks);
-        this.addNextTanks(tanks);
-        this.addLastTanks(tanks);
-        this.addCrewMembers(tanks);
+        this.removeAllTankData();
+        this.reloadTanks();
+        System.out.println("Imported tanks");
         // TODO: Add default profile
         // TODO: Implement consumables with relation to tanks
         // TODO: Implement accievements
@@ -76,24 +56,43 @@ public class EncyclopediaFactory {
 
         // TODO: Remove all static entities as operations
 
-        // Establish relations
-        this.addTankModuleRelations(modules);
-        this.addTankModuleSpecialRelations(tanks);
         System.out.println("Import done!");
     }
 
-    @Transactional
-    public void removeAllTankModules() {
-        List<TankModule> modules = this.tankModuleRepository.findAll().list();
-        for (TankModule module : modules) {
-            this.entityManager.remove(module);
+    private void reloadTanks() {
+        List<TankData> tanks = new ArrayList<>();
+        TanksResult result = null;
+        int pageNo = 1;
+        while ((result = apiClient.tanks(config.applicationID(), pageNo)) != null && result.data != null && result.data.isPresent()) {
+            tanks.addAll(result.data.get().values());
+            pageNo++;
         }
+
+        List<TankModuleData> modules = new ArrayList<>();
+        for (TankData tank : tanks) {
+            modules.addAll(tank.modules_tree.values());
+        }
+        // Add new entries
+        this.addTankModules(modules);
+        this.addTanks(tanks);
+        this.addNextTanks(tanks);
+        this.addLastTanks(tanks);
+        this.addCrewMembers(tanks);
+        this.addDefaultProfiles(tanks);
+
+        // Add relations
+        this.addTankModuleRelations(modules);
+        this.addTankModuleSpecialRelations(tanks);
     }
 
     @Transactional
-    public void removeAllTanks() {
-        List<Tank> tanks = this.tankRepository.findAll().list();
-        for (Tank tank : tanks) {
+    public void removeAllTankData() {
+        // Remove tank modules
+        for (TankModule module : this.tankModuleRepository.findAll().list()) {
+            this.entityManager.remove(module);
+        }
+        // Remove tanks
+        for (Tank tank : this.tankRepository.findAll().list()) {
             this.entityManager.remove(tank);
         }
     }
@@ -205,6 +204,92 @@ public class EncyclopediaFactory {
                 this.entityManager.persist(member);
                 tank.crewMembers.add(member);
             }
+            this.entityManager.persist(tank);
+        }
+    }
+
+    @Transactional
+    public void addDefaultProfiles(List<TankData> tanks) {
+        for (TankData tankData : tanks) {
+            Tank tank = this.tankRepository.findById(tankData.tank_id);
+            DefaultProfile defaultProfile = new DefaultProfile();
+            defaultProfile.maxAmmo = tankData.default_profile.max_ammo;
+            defaultProfile.weight = tankData.default_profile.weight;
+            defaultProfile.hp = tankData.default_profile.hp;
+            defaultProfile.hullWeight = tankData.default_profile.hull_weight;
+            defaultProfile.speedForward = tankData.default_profile.speed_forward;
+            defaultProfile.hullHp = tankData.default_profile.hull_hp;
+            defaultProfile.speedBackward = tankData.default_profile.speed_backward;
+            defaultProfile.maxWeight = tankData.default_profile.max_weight;
+
+            DefaultProfileModules modules = new DefaultProfileModules();
+            modules.gunId = tankData.default_profile.modules.gun_id;
+            modules.suspensionId = tankData.default_profile.modules.suspension_id;
+            modules.radioId = tankData.default_profile.modules.radio_id;
+            modules.engineId = tankData.default_profile.modules.engine_id;
+            if (tankData.default_profile.modules.turret_id != null && tankData.default_profile.modules.turret_id.isPresent()) {
+                modules.turretId = tankData.default_profile.modules.turret_id.get();
+            }
+            this.entityManager.persist(modules);
+            defaultProfile.modules = modules;
+
+            DefaultProfileGun gun = new DefaultProfileGun();
+            gun.moveDownArc = tankData.default_profile.gun.move_down_arc;
+            gun.caliber = tankData.default_profile.gun.caliber;
+            gun.name = tankData.default_profile.gun.name;
+            gun.weight = tankData.default_profile.gun.weight;
+            gun.moveUpArc = tankData.default_profile.gun.move_up_arc;
+            gun.fireRate = tankData.default_profile.gun.fire_rate;
+            gun.dispersion = tankData.default_profile.gun.dispersion;
+            gun.tag = tankData.default_profile.gun.tag;
+            gun.traverseSpeed = tankData.default_profile.gun.traverse_speed;
+            gun.reloadTime = tankData.default_profile.gun.reload_time;
+            gun.tier = tankData.default_profile.gun.tier;
+            gun.aimTime = tankData.default_profile.gun.aim_time;
+            this.entityManager.persist(gun);
+            defaultProfile.gun = gun;
+
+            if (tankData.default_profile.turret != null) {
+                DefaultProfileTurret turret = new DefaultProfileTurret();
+                turret.name = tankData.default_profile.turret.name;
+                turret.weight = tankData.default_profile.turret.weight;
+                turret.viewRange = tankData.default_profile.turret.view_range;
+                turret.hp = tankData.default_profile.turret.hp;
+                turret.tag = tankData.default_profile.turret.tag;
+                turret.traverseRightArc = tankData.default_profile.turret.traverse_right_arc;
+                turret.traverseLeftArc = tankData.default_profile.turret.traverse_left_arc;
+                turret.tier = tankData.default_profile.turret.tier;
+                if (tankData.default_profile.turret.traverse_speed != null && tankData.default_profile.turret.traverse_speed.isPresent()) {
+                    turret.traverseSpeed = tankData.default_profile.turret.traverse_speed.get();
+                }
+                this.entityManager.persist(turret);
+                defaultProfile.turret = turret;
+            }
+
+            DefaultProfileRadio radio = new DefaultProfileRadio();
+            radio.tier = tankData.default_profile.radio.tier;
+            radio.signalRange = tankData.default_profile.radio.signal_range;
+            radio.tag = tankData.default_profile.radio.tag;
+            radio.name = tankData.default_profile.radio.name;
+            radio.weight = tankData.default_profile.radio.weight;
+            this.entityManager.persist(radio);
+            defaultProfile.radio = radio;
+
+            DefaultProfileAmmo ammo = new DefaultProfileAmmo();
+            ammo.penetration = tankData.default_profile.ammo.penetration;
+            ammo.type = tankData.default_profile.ammo.type;
+            ammo.damage = tankData.default_profile.ammo.damage;
+            if (tankData.default_profile.ammo.stun != null && tankData.default_profile.ammo.stun.isPresent()) {
+                DefaultProfileStun stun = new DefaultProfileStun();
+                stun.duration = tankData.default_profile.ammo.stun.get().duration;
+                this.entityManager.persist(stun);
+                ammo.stun = stun;
+            }
+            this.entityManager.persist(ammo);
+            defaultProfile.ammo = ammo;
+
+            this.entityManager.persist(defaultProfile);
+            tank.defaultProfile = defaultProfile;
             this.entityManager.persist(tank);
         }
     }

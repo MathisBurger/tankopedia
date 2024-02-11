@@ -56,6 +56,9 @@ public class Tank {
     @OneToMany
     public List<CrewMember> crewMembers;
 
+    @OneToOne
+    public DefaultProfile defaultProfile;
+
     @ManyToMany
     @JoinTable(
             name = "tank_radio",
