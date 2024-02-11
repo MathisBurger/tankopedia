@@ -7,8 +7,7 @@ import de.mathisburger.api.models.subtypes.CrewMemberData;
 import de.mathisburger.api.models.subtypes.TankModuleData;
 import de.mathisburger.config.WargamingConfig;
 import de.mathisburger.entity.*;
-import de.mathisburger.repository.TankModuleRepository;
-import de.mathisburger.repository.TankRepository;
+import de.mathisburger.repository.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -36,6 +35,18 @@ public class TankFactory {
 
     @Inject
     TankRepository tankRepository;
+
+    @Inject
+    CrewMemberRepository crewMemberRepository;
+
+    @Inject
+    DefaultProfileRepository defaultProfileRepository;
+
+    @Inject
+    LastTankRepository lastTankRepository;
+
+    @Inject
+    NextTankRepository nextTankRepository;
 
     public void reloadTanks() {
         List<TankData> tanks = new ArrayList<>();
@@ -65,6 +76,7 @@ public class TankFactory {
 
     @Transactional
     public void removeAllTankData() {
+
         // Remove tank modules
         for (TankModule module : this.tankModuleRepository.findAll().list()) {
             this.entityManager.remove(module);
@@ -72,6 +84,22 @@ public class TankFactory {
         // Remove tanks
         for (Tank tank : this.tankRepository.findAll().list()) {
             this.entityManager.remove(tank);
+        }
+        // Remove crew members
+        for (CrewMember member : this.crewMemberRepository.findAll().list()) {
+            this.entityManager.remove(member);
+        }
+        // Remove default profiles
+        for (DefaultProfile profile : this.defaultProfileRepository.findAll().list()) {
+            this.entityManager.remove(profile);
+        }
+        // Remove last tanks
+        for (LastTank lastTank : this.lastTankRepository.findAll().list()) {
+            this.entityManager.remove(lastTank);
+        }
+        // Remove next tanks
+        for (NextTank nextTank : this.nextTankRepository.findAll().list()) {
+            this.entityManager.remove(nextTank);
         }
     }
 
