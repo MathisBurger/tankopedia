@@ -1,5 +1,6 @@
 package de.mathisburger.factory;
 
+import de.mathisburger.factory.encyclopedia.MapFactory;
 import de.mathisburger.factory.encyclopedia.TankFactory;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -11,6 +12,9 @@ public class EncyclopediaFactory {
     @Inject
     TankFactory tankFactory;
 
+    @Inject
+    MapFactory mapFactory;
+
 
 
     @Scheduled(cron = "{wargaming.schedule}")
@@ -18,6 +22,10 @@ public class EncyclopediaFactory {
         this.tankFactory.removeAllTankData();
         this.tankFactory.reloadTanks();
         System.out.println("Imported tanks");
+
+        this.mapFactory.clearMapData();
+        this.mapFactory.reloadMaps();
+        System.out.println("Imported maps");
 
         // TODO: Implement consumables with relation to tanks
         // TODO: Implement accievements
@@ -28,8 +36,6 @@ public class EncyclopediaFactory {
         // TODO: Implement badges
         // TODO: Implement crew qualifications
         // TODO: Implement crew skills
-
-        // TODO: Remove all static entities as operations
 
         System.out.println("Import done!");
     }

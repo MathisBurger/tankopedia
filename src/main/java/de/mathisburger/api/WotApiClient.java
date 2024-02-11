@@ -27,4 +27,8 @@ public interface WotApiClient {
     @Path("/encyclopedia/vehicles/")
     TanksResult tanks(@QueryParam("application_id") String applicationId, @QueryParam("page_no") int pageNo);
 
+    @GET
+    @Path("/encyclopedia/arenas/")
+    MapResult maps(@QueryParam("application_id") String applicationId);
+
 }
