@@ -83,7 +83,7 @@ public class TankFactory {
         }
         // Remove tanks
         for (Tank tank : this.tankRepository.findAll().list()) {
-            this.entityManager.remove(tank);
+            //this.entityManager.remove(tank);
         }
         // Remove crew members
         for (CrewMember member : this.crewMemberRepository.findAll().list()) {
