@@ -29,7 +29,6 @@ public class EncyclopediaFactory {
 
         // TODO: Implement consumables with relation to tanks
         // TODO: Implement accievements
-        // TODO: Implement maps
         // TODO: Implement personal missions
         // TODO: Implement personal reserves
         // TODO: Implement modules
