@@ -34,4 +34,8 @@ public interface WotApiClient {
     @GET
     @Path("/encyclopedia/achievements/")
     AchievementResult achievements(@QueryParam("application_id") String applicationId);
+
+    @GET
+    @Path("/encyclopedia/personalmissions/")
+    PersonalMissionsResult personalMissions(@QueryParam("application_id") String applicationId);
 }
