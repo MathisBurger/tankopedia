@@ -29,8 +29,8 @@ public class EncyclopediaFactory {
         this.mapFactory.reloadMaps();
         System.out.println("Imported maps");
 
-        this.achievementFactory.clearAchievementData();
-        this.achievementFactory.reloadAchievements();
+        //this.achievementFactory.clearAchievementData();
+        //this.achievementFactory.reloadAchievements();
         System.out.println("Imported achievements");
 
         System.out.println("Import done!");

@@ -48,7 +48,7 @@ public class AchievementFactory {
             achievement.imageBig = data.image_big;
             achievement.heroInfo = data.hero_info;
             achievement.name = data.name_i18n;
-            achievement.order = data.order;
+            //achievement.order = data.order;
             achievement.type = data.type;
             achievement.image = data.image;
             achievement.condition = data.condition;

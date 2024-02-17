@@ -25,7 +25,7 @@ public class Achievement {
 
     public String name;
 
-    public int order;
+    //public int order;
 
     public String type;
 
