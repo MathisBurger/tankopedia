@@ -33,14 +33,6 @@ public class EncyclopediaFactory {
         this.achievementFactory.reloadAchievements();
         System.out.println("Imported achievements");
 
-        // TODO: Implement consumables with relation to tanks
-        // TODO: Implement personal missions
-        // TODO: Implement personal reserves
-        // TODO: Implement modules
-        // TODO: Implement badges
-        // TODO: Implement crew qualifications
-        // TODO: Implement crew skills
-
         System.out.println("Import done!");
     }
 }
